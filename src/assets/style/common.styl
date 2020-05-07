@@ -1,0 +1,30 @@
+.dark-theme
+  --basic-color #F1F2F8
+  --primary-color #ff5f3d
+  --highlight-color #ffffff
+  --text-color #343434
+  --text-dark-color #979797
+  --hint-color #494949
+  --input-border-color #d8d7e5
+  --boundary-color #efeef9
+  --highlight-box-shadow 5px 5px 10px 0 rgba(255, 219, 219, 0.5)
+
+  .scroll
+    overflow hidden
+    overflow-y auto
+    &::-webkit-scrollbar
+      width 8px
+    &::-webkit-scrollbar-thumb
+      background var(--primary-color)
+      border-radius 6px
+  
+  .primary-button
+    font-size 14px
+    color var(--highlight-color)
+    background var(--primary-color)
+    border-radius 2px
+
+    &.disabled
+      background var(--basic-color)
+      color var(--text-color)
+      cursor no-drop
