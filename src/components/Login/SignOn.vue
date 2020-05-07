@@ -13,10 +13,10 @@
         <label>验证 <Validator /></label>
       </div>
 
-      <div class="remember-password">
+      <label class="remember-password">
         <MyRadio v-model="rememberPassword" />
         <span>记住密码</span>
-      </div>
+      </label>
 
       <div class="button-container">
         <button @click="login">{{$t('login')}}</button>
@@ -94,7 +94,7 @@ export default class SignOn extends Vue {
       font-size 12px
       color var(--text-dark-color)
       span
-        margin-left 10px
+        margin-left 4px
     .button-container
       display flex
       align-items center

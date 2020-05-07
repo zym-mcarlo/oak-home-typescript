@@ -2,7 +2,7 @@
   <header>
     <div class="content">
       <img src="" alt="logo">
-      <select class="language-selector" name="" id="" v-model="locale">
+      <select class="language-selector" name="" id="" v-model="$i18n.locale">
         <option value="en-US">English</option>
         <option value="zh-CN">中文</option>
       </select>
@@ -12,16 +12,9 @@
 
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator'
-import {Locale} from '@/assets/js/config'
 
 @Component
-export default class LoginHeader extends Vue {
-  private locale: Locale = 'zh-CN'
-
-  onLocaleChange() {
-    console.log(this.$i18n)
-  }
-}
+export default class LoginHeader extends Vue {}
 </script>
 
 <style lang="stylus" scoped>

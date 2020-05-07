@@ -5,8 +5,12 @@
     </div>
 
     <ol>
-      <li>总览</li>
-      <li>矿机</li>
+      <li>
+        <router-link to="/rig">矿机</router-link>
+      </li>
+      <li>
+        <router-link to="/rigList">列表</router-link>
+      </li>
     </ol>
   </div>
 </template>
@@ -17,6 +21,7 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="stylus" scoped>
+.aside-container
+  color var(--highlight-color)
 </style>

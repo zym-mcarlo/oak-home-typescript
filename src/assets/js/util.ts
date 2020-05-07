@@ -15,17 +15,12 @@ export function getSession(key: string) {
   if (!storage) return
   storage = decodeURIComponent(storage)
   const resultAndExpires = storage.split('&expires=')
-  let result: string
-  try {
-    result = JSON.parse(resultAndExpires[0])
-    const expires = moment(resultAndExpires[1])
-    const nowTime = moment()
-    if (expires.isBefore(nowTime)) {
-      result = ''
-      deleteSession(key)
-    }
-  } catch (error) {
-    throw error
+  let result = JSON.parse(resultAndExpires[0])
+  const expires = moment(resultAndExpires[1])
+  const nowTime = moment()
+  if (expires.isBefore(nowTime)) {
+    result = ''
+    deleteSession(key)
   }
   return result
 }
