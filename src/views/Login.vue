@@ -2,7 +2,7 @@
   <section class="login-container">
     <LoginHeader class="header" />
     <div class="container">
-      <SignOn />
+      <LoginModule />
       <LoginFooter class="footer" />
     </div>
   </section>
@@ -12,13 +12,13 @@
 import {Vue, Component} from 'vue-property-decorator'
 import LoginHeader from '@/components/Login/Header.vue'
 import LoginFooter from '@/components/Login/Footer.vue'
-import SignOn from '@/components/Login/SignOn.vue'
+import LoginModule from '@/components/Login/LoginModule.vue'
 
 @Component({
   components: {
     LoginHeader,
     LoginFooter,
-    SignOn
+    LoginModule
   }
 })
 export default class Login extends Vue{}

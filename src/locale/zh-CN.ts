@@ -1,3 +1,4 @@
 export default {
-  login: '登录'
+  login: '登录',
+  registry: '注册'
 }

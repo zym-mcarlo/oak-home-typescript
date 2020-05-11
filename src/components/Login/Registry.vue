@@ -1,22 +1,14 @@
 <template>
   <div class="content">
-    <AccountInput class="item" ref="account" v-model="account" />
-    <PasswordInput class="item" ref="password" v-model="password" />
-    <Validator class="item" ref="validator" />
-    
-    <label class="remember-password">
-      <MyRadio v-model="rememberPassword" />
-      <span>记住密码</span>
-    </label>
+    <AccountInput class="item" ref="account" :isRegistry="true" v-model="account" />
+    <PasswordInput class="item" ref="password" :isRegistry="true" v-model="password" />
+    <PasswordInput class="item" ref="otherPassword" :isRegistry="true" :samePassword="password" v-model="confirmPassword" />
+    <VerifyCode class="item" :account="account" v-model="verifyCode" />
 
     <div class="button-container">
-      <button class="primary-button" @click="login">{{$t('login')}}</button>
+      <button class="primary-button" @click="registry">{{$t('registry')}}</button>
       or
-      <button class="second-button" @click="$emit('changeState', 'registry')">马上注册</button>
-    </div>
-
-    <div class="forget-password">
-      <button @click="$emit('changeState', 'forgetPassword')">忘记密码</button>
+      <button class="second-button" @click="$emit('changeState', 'login')">去登录</button>
     </div>
   </div>
 </template>
@@ -25,39 +17,41 @@
 import {Vue, Component} from 'vue-property-decorator'
 import { STATE } from '@/assets/js/type'
 import { TranslateResult } from 'vue-i18n'
-import { accountRegex, passwordRegex } from './util'
+import { accountRegex, passwordRegex, verifyCodeRegex } from './util'
 
 import MyRadio from '../MyRadio.vue'
 import AccountInput from './AccountInput.vue'
 import PasswordInput from './PasswordInput.vue'
-import Validator from './Validator.vue'
+import VerifyCode from './VerifyCode.vue'
 
 @Component({
   components: {
     MyRadio,
     AccountInput,
     PasswordInput,
-    Validator
+    VerifyCode
   }
 })
 export default class SignOn extends Vue {
   private rememberPassword = false
   private account = ''
   private password = ''
+  private confirmPassword = ''
+  private verifyCode = ''
 
   get verifyAccount() {
     let state: STATE
     let message: string | TranslateResult
 
-    if (this.account === 'admin') {
-      state = STATE.SUCCESS
-      message = ''
+    if (this.account === '') {
+      state = STATE.FAILED
+      message = '请输入账号'
     } else if (accountRegex.test(this.account)) {
       state = STATE.SUCCESS
       message = ''
     } else {
       state = STATE.FAILED
-      message = '账号错误'
+      message = 'Wrong account format'
     }
     
     return { state, message }
@@ -67,12 +61,33 @@ export default class SignOn extends Vue {
     let state: STATE
     let message: string | TranslateResult
 
-    if (passwordRegex.test(this.password)) {
+    if (this.password === '') {
+      state = STATE.FAILED
+      message = '请输入密码'
+    } else if (this.confirmPassword && this.password !== this.confirmPassword) {
+      state = STATE.FAILED
+      message = '两次密码输入不一致'
+    } else if (passwordRegex.test(this.password)) {
       state = STATE.SUCCESS
       message = ''
     } else {
       state = STATE.FAILED
-      message = '密码错误'
+      message = '6-100位 数字、字母、下划线的组合'
+    }
+
+    return { state, message }
+  }
+
+  get verifyVerifyCode() {
+    let state: STATE
+    let message: string | TranslateResult
+
+    if (verifyCodeRegex.test(this.verifyCode)) {
+      state = STATE.SUCCESS
+      message = ''
+    } else {
+      state = STATE.FAILED
+      message = '验证码有误'
     }
     
     return { state, message }
@@ -85,10 +100,13 @@ export default class SignOn extends Vue {
     if (this.verifyPassword.state === STATE.FAILED) {
       return this.verifyPassword
     }
+    if (this.verifyVerifyCode.state === STATE.FAILED) {
+      return this.verifyVerifyCode
+    }
     return { state: STATE.SUCCESS, message: '登录成功' }
   }
 
-  login() {
+  registry() {
     if (this.verifyLoginEnv.state === STATE.SUCCESS) {
       this.$router.push({name: 'Manage'})
     } else {
@@ -107,30 +125,13 @@ export default class SignOn extends Vue {
     margin auto
   .item:not(:first-of-type)
     margin-top 40px
-  .remember-password
-    ContentContainer()
-    margin-top 30px
-    display flex
-    align-items center
-    justify-content flex-end
-    font-size 12px
-    color var(--text-dark-color)
-    span
-      margin-left 4px
   .button-container
     display flex
     align-items center
     flex-direction column
+    margin-top 30px
     button
       ContentContainer()
       height 40px
       margin 10px 0
-  .forget-password
-    ContentContainer()
-    text-align center
-    button
-      font-size 12px
-      color var(--text-dark-color)
-      &:hover
-        text-decoration underline
 </style>

@@ -1,6 +1,9 @@
 <template>
-  <div class="validator">
-    <div id="yundun-spm" class="nc-container"></div>
+  <div class="item">
+    验证
+    <div class="validator">
+      <div id="yundun-spm" class="nc-container"></div>
+    </div>
   </div>
 </template>
 
@@ -21,7 +24,14 @@ export default class Validator extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-.validator
-  width 310px
-  height 34px
+.item
+  width 380px
+  margin auto
+  color var(--text-color)
+  display flex
+  align-items center
+  justify-content space-between
+  .validator
+    width 310px
+    height 34px
 </style>

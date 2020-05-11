@@ -5,6 +5,7 @@
   --text-color #343434
   --text-dark-color #979797
   --hint-color #494949
+  --error-color #ff5f3d
   --input-border-color #d8d7e5
   --boundary-color #efeef9
   --highlight-box-shadow 5px 5px 10px 0 rgba(255, 219, 219, 0.5)
@@ -25,6 +26,18 @@
     border-radius 2px
 
     &.disabled
+      background var(--basic-color)
+      color var(--text-color)
+      cursor no-drop
+
+  .second-button
+    font-size 14px
+    color var(--text-color)
+    border 1px solid var(--text-color)
+    border-radius 2px
+
+    &.disabled
+      border 1px solid var(--basic-color)
       background var(--basic-color)
       color var(--text-color)
       cursor no-drop
