@@ -13,6 +13,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { TranslateResult } from 'vue-i18n'
+import { ACCOUNT_REGEX } from './util'
 
 @Component
 export default class AccountInput extends Vue{
@@ -21,10 +22,9 @@ export default class AccountInput extends Vue{
 
   get verifyAccount() {
     let message: string | TranslateResult = ''
-    const accountRegex = /^1[3456789]\d{9}$/
 
     if (this.isRegistry) {
-      if (this.value && !accountRegex.test(this.value)) {
+      if (this.value && !ACCOUNT_REGEX.test(this.value)) {
         message = 'Wrong account format'
       }
     }

@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { accountRegex } from './util'
+import { VERIFY_CODE_REGEX, DEFAULT_COUNT_DOWN } from './util'
 import moment from 'moment'
 
 @Component
@@ -21,11 +21,11 @@ export default class PasswordInput extends Vue {
   @Prop({ required: true }) private account!: string
   @Prop({ required: true }) private value!: string
 
-  private countDown: moment.Duration = moment.duration(10, 'seconds')
+  private countDown: moment.Duration = moment.duration(DEFAULT_COUNT_DOWN, 'seconds')
   private startCountDown = false
 
   get accountIsValid() {
-    return accountRegex.test(this.account)
+    return VERIFY_CODE_REGEX.test(this.account)
   }
 
   getVerifyCode() {
@@ -39,7 +39,7 @@ export default class PasswordInput extends Vue {
 
   preventShake() {
     this.startCountDown = true
-    this.countDown = moment.duration(10, 'seconds')
+    this.countDown = moment.duration(DEFAULT_COUNT_DOWN, 'seconds')
     const timer = setInterval(() => {
       this.countDown.subtract(1, 'second')
       if (this.countDown.as('milliseconds') === 0) {

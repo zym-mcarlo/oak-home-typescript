@@ -13,6 +13,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { TranslateResult } from 'vue-i18n'
+import { PASSWORD_REGEX } from './util'
 
 @Component
 export default class PasswordInput extends Vue{
@@ -22,13 +23,12 @@ export default class PasswordInput extends Vue{
 
   get verifyPassword() {
     let message: string | TranslateResult = ''
-    const passwordRegex = /^[0-9a-zA-Z_]{6,10}$/
 
     if (this.isRegistry) {
       if (this.value) {
         if (this.samePassword && this.value !== this.samePassword) {
           message = '两次密码输入不一致'
-        } else if (!passwordRegex.test(this.value)) {
+        } else if (!PASSWORD_REGEX.test(this.value)) {
           message = '6-100位 数字、字母、下划线的组合'
         }  
       }

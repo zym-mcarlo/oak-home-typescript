@@ -25,7 +25,7 @@
 import {Vue, Component} from 'vue-property-decorator'
 import { STATE } from '@/assets/js/type'
 import { TranslateResult } from 'vue-i18n'
-import { accountRegex, passwordRegex } from './util'
+import { ACCOUNT_REGEX, PASSWORD_REGEX } from './util'
 
 import MyRadio from '../MyRadio.vue'
 import AccountInput from './AccountInput.vue'
@@ -52,7 +52,7 @@ export default class SignOn extends Vue {
     if (this.account === 'admin') {
       state = STATE.SUCCESS
       message = ''
-    } else if (accountRegex.test(this.account)) {
+    } else if (ACCOUNT_REGEX.test(this.account)) {
       state = STATE.SUCCESS
       message = ''
     } else {
@@ -67,7 +67,7 @@ export default class SignOn extends Vue {
     let state: STATE
     let message: string | TranslateResult
 
-    if (passwordRegex.test(this.password)) {
+    if (PASSWORD_REGEX.test(this.password)) {
       state = STATE.SUCCESS
       message = ''
     } else {
@@ -85,7 +85,7 @@ export default class SignOn extends Vue {
     if (this.verifyPassword.state === STATE.FAILED) {
       return this.verifyPassword
     }
-    return { state: STATE.SUCCESS, message: '登录成功' }
+    return { state: STATE.SUCCESS, message: '格式正确' }
   }
 
   login() {
